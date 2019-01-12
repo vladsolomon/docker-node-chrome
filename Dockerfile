@@ -1,7 +1,9 @@
-FROM docker.io/node:10-stretch
+FROM docker:dind
+RUN apk add --no-cache \
+            nodejs \
+            npm
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends chromium
+RUN apk add --no-cache -y --no-install-recommends chromium
 
 ENV CHROME_BIN=chromium
 
