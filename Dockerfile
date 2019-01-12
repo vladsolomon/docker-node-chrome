@@ -3,31 +3,34 @@ RUN apk add --no-cache \
             nodejs \
             npm
 
-# Installs latest Chromium package.
-RUN apk update && apk upgrade \
-&& echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories \
-&& echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories \
-&& apk add --no-cache \
-chromium@edge \
-nss@edge \
-&& rm -rf /var/lib/apt/lists/* \
-/var/cache/apk/* \
-/usr/share/man \
-/tmp/*
+RUN echo "http://dl-2.alpinelinux.org/alpine/edge/main" > /etc/apk/repositories
+RUN echo "http://dl-2.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
+RUN echo "http://dl-2.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 
-# Add Chrome as a user
-RUN mkdir -p /usr/src/app \
-&& adduser -D chrome \
-&& chown -R chrome:chrome /usr/src/app
-# Run Chrome as non-privileged
-USER chrome
-WORKDIR /usr/src/app
+# install chromium
+RUN apk -U --no-cache \
+    --allow-untrusted add \
+    zlib-dev \
+    chromium \
+    xvfb \
+    wait4ports \
+    xorg-server \
+    dbus \
+    ttf-freefont \
+    grep \ 
+    udev \
+    && rm -rf /var/lib/apt/lists/* \
+    /var/cache/apk/* \
+    /usr/share/man \
+    /tmp/* \
+    /usr/lib/node_modules/npm/man \
+    /usr/lib/node_modules/npm/doc \
+    /usr/lib/node_modules/npm/html \
+    /usr/lib/node_modules/npm/scripts
 
-ENV CHROME_BIN=/usr/bin/chromium-browser \
-CHROME_PATH=/usr/lib/chromium/
-
-# Autorun chrome headless with no GPU
-ENTRYPOINT ["chromium-browser", "--headless", "--disable-gpu", "--disable-software-rasterizer", "--disable-dev-shm-usage"]
+ENV CHROME_BIN=/usr/bin/chromium-browser
+ENV CHROME_PATH=/usr/lib/chromium/
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1
 
 WORKDIR /usr/src/app
 CMD ["npm", "start"]
