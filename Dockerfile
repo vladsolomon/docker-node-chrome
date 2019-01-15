@@ -1,7 +1,8 @@
 FROM docker:dind
 RUN apk add --no-cache \
             nodejs \
-            npm
+            npm \
+            curl
 
 # install chromium
 RUN apk -U --no-cache \
