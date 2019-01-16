@@ -3,7 +3,8 @@ RUN apk update
 RUN apk add --no-cache \
             curl \
             nodejs \
-            npm
+            npm \
+            git
 
 # install chromium
 RUN apk -U --no-cache \
