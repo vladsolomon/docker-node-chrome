@@ -1,11 +1,12 @@
 FROM docker:dind
+
 RUN apk update
 RUN apk add --no-cache \
             curl \
-            nodejs \
-            npm \
+            nodejs=10.15.3-r0 \
+            npm=10.15.3-r0 \
             git
-
+RUN node -v
 # install chromium
 RUN apk -U --no-cache \
     --allow-untrusted add \
