@@ -4,6 +4,7 @@ RUN apk add --no-cache \
             curl \
             nodejs \
             npm \
+            yarn \
             git
 RUN node -v
 # install chromium
