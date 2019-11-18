@@ -3,7 +3,6 @@ RUN apk update
 RUN apk add --no-cache \
             curl \
             nodejs \
-            npm \
             yarn \
             git
 RUN node -v
