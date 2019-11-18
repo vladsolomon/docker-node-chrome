@@ -15,4 +15,4 @@ ENV CHROME_BIN=/usr/bin/chromium-browser
 ENV CHROME_PATH=/usr/lib/chromium/
 
 WORKDIR /usr/src/app
-CMD ["npm", "start"]
+CMD ["yarn", "start"]
